@@ -70,7 +70,7 @@ ports:
 # Ingress Configuration
 # ==========================
 ingress:
-  enabled: true  # Enable ingress resource creation.
+  enabled: false  # Enable ingress resource creation.
   className: "alb"  # Specify ingress class (e.g., ALB for AWS Load Balancer, NGINX for default).
   annotations:
     # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:533267413931:certificate/849eb4d3-cccd-4f73-8486-88c35f4e054e
