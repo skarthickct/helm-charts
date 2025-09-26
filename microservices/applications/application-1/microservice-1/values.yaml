@@ -5,7 +5,7 @@
 # General Application Metadata
 # ==========================
 name: microservice-1  # Name of the application; referenced across templates for naming resources.
-namespace:   # Kubernetes namespace where the resources will be deployed.
+namespace: petclinic # Kubernetes namespace where the resources will be deployed.
 
 # ==========================
 # Replica and Scaling Configurations
