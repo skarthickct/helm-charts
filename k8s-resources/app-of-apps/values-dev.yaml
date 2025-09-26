@@ -137,7 +137,7 @@ addons:
 
 
   - name: metrics-server
-    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    repoURL: https://github.com/skarthickct/helm-charts.git
     chartPath: k8s-resources/addons/metrics-server
     valuesFile: values-dev.yaml
     namespace: kube-system
