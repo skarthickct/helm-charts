@@ -1,0 +1,6 @@
+apiVersion: v2
+name: microservices-app-of-apps
+description: A Helm chart for implementing ArgoCD app of apps pattern i.e. creating all the applications under a single argocd app
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

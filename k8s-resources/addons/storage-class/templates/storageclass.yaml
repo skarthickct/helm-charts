@@ -1,0 +1,25 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .Values.storageClassName }}
+  annotations:
+    {{- if .Values.isDefaultClass }}
+    storageclass.kubernetes.io/is-default-class: "true"
+    {{- end }}
+provisioner: ebs.csi.aws.com
+volumeBindingMode: {{ .Values.volumeBindingMode }}
+allowVolumeExpansion: true
+parameters:
+  type: {{ quote .Values.parameters.type }}
+  encrypted: {{ quote .Values.parameters.encrypted }}
+{{- if .Values.allowedTopologies }}
+allowedTopologies:
+{{- range .Values.allowedTopologies }}
+  - matchLabelExpressions:
+    - key: {{ .key }}
+      values:
+        {{- range .values }}
+        - {{ . }}
+        {{- end }}
+{{- end }}
+{{- end }}

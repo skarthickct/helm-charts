@@ -1,0 +1,18 @@
+# Default values for the StorageClass
+storageClassName: monitoring-sc
+isDefaultClass: true
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+# allowVolumeExpansion: true
+
+# Parameters for the StorageClass
+parameters:
+  type: gp3
+  encrypted: "true"
+
+# Allowed topologies for zone-specific provisioning
+# allowedTopologies:
+#   - key: topology.kubernetes.io/zone
+#     values:
+#       - ap-south-1a
+#       - ap-south-1b

@@ -1,0 +1,4 @@
+{{- range .Values.addons }}
+{{ include "addon-apps.application" . }}
+---
+{{- end }}

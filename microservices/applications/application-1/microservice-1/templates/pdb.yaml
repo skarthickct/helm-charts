@@ -1,0 +1,19 @@
+{{- if .Values.pdbSettings.createPdb }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "service.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "service.fullname" . }}
+spec:
+  {{- if .Values.pdbSettings.useMinAvailable }}
+  minAvailable: {{ .Values.pdbSettings.minAvailable }}
+  {{- end }}
+  {{- if .Values.pdbSettings.useMaxUnavailable }}
+  maxUnavailable: {{ .Values.pdbSettings.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "service.fullname" . }}
+{{- end }}

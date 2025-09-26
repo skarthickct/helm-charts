@@ -1,0 +1,7 @@
+aws-load-balancer-controller:
+  serviceAccount:
+    create: true
+    name: alb-controller-sa
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::703671898773:role/AmazonEKSLoadBalancerControllerRole"
+  clusterName: asista-ap-south-1-Prod-eks 

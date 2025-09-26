@@ -1,0 +1,17 @@
+apiVersion: v2
+name: aws-load-balancer-controller
+description: A Helm chart for installing the AWS Load balancer controller
+type: application
+
+# The chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 1.8.2
+
+# Version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: "v2.8.2"
+
+dependencies:
+- name: aws-load-balancer-controller
+  version: 1.8.2
+  repository: https://aws.github.io/eks-charts

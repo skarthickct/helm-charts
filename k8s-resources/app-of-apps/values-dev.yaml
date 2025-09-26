@@ -1,0 +1,192 @@
+addons:
+  - name: prometheus
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/prometheus
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: grafana
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/grafana
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: fluentbit
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/fluent-bit
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: alertmanager
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/alertmanager
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: loki
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/loki-distributed
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: prometheus-msteams
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/prometheus-msteams
+    valuesFile: values-dev.yaml
+    namespace: monitoring
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: storageclass
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/storage-class
+    valuesFile: values-dev.yaml
+    prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+    selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+    allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: aws-load-balancer-controller
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/aws-load-balancer-controller
+    valuesFile: values-dev.yaml
+    namespace: kube-system
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: karpenter
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/karpenter
+    valuesFile: values-dev.yaml
+    namespace: kube-system
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: metrics-server
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/metrics-server
+    valuesFile: values-dev.yaml
+    namespace: kube-system
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: secrets-store-csi-driver
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/secrets-store-csi-driver
+    valuesFile: values.yaml
+    namespace: kube-system
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+  - name: secrets-store-csi-driver-provider-aws
+    repoURL: https://github.com/AWS-CICD-ASISTA/asista-gitops-repository.git
+    chartPath: k8s-resources/addons/secrets-store-csi-driver-provider-aws
+    valuesFile: values.yaml
+    namespace: kube-system
+    syncOptions: 
+    - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
+
+
+#   - name: prometheus-blackbox-exporter
+#     repoURL: https://bitbucket.org/lookfinitydev/ideaclan-gitops-repository.git
+#     chartPath: argocd-manifests/add-ons/add-on-charts/prometheus-blackbox-exporter
+#     valuesFile: values-dev.yaml
+#     namespace: monitoring
+#     prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+#     selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cl>
+#     allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+#     syncOptions: 
+#     - Validate=true # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+#     - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+#     - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+#     - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+#     - RespectIgnoreDifferences=false # When syncing changes, respect fields ignored by the ignoreDifferences configuration

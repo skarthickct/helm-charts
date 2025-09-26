@@ -1,0 +1,21 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: helm-storage
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"  # Set this StorageClass as the default
+  labels:
+    k8slens-edit-resource-version: v1
+provisioner: ebs.csi.aws.com  # The provisioner for AWS EBS CSI Driver
+parameters:
+  type: gp3  # Specify gp3 as the storage type
+allowVolumeExpansion: true  # Allow volume expansion
+volumeBindingMode: Immediate
+reclaimPolicy: Delete
+allowedTopologies:
+- matchLabelExpressions:
+  - key: topology.kubernetes.io/zone
+    values:
+      - ap-south-1a
+      - ap-south-1b
+      - ap-south-1c
