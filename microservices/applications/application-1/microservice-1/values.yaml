@@ -50,7 +50,7 @@ service:
 # ==========================
 # Resource Requests and Limits
 # ==========================
-resources: {}
+resources:
   limits:
     cpu: "200m"  # Maximum CPU allocation for the container.
     memory: "512Mi"  # Maximum memory allocation.
