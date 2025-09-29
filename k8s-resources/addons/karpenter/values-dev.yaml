@@ -78,9 +78,7 @@ affinity:
             - key: eks.amazonaws.com/nodegroup
               operator: In
               values:
-              - asista-backend-nodes-20250119114455583400000001
-              - asista-common-nodes-20250205101238091800000006
-              - asista-frontend-nodes-20250205101238089400000004
+              - application-nodes
   # podAntiAffinity:
   #   requiredDuringSchedulingIgnoredDuringExecution:
   #     - topologyKey: "kubernetes.io/zone"
