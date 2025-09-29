@@ -23,12 +23,12 @@ spec:
         - key: karpenter.sh/time-window
           operator: In
           values: ["active"]
-        # - key: karpenter.k8s.aws/instance-category
-        #   operator: In
-        #   values: ["t"]
-        # - key: karpenter.k8s.aws/instance-generation
-        #   operator: Gt
-        #   values: ["2"]
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["t"]
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values: ["2"]
       nodeClassRef:
         apiVersion: karpenter.k8s.aws/v1beta1
         kind: EC2NodeClass
@@ -40,15 +40,16 @@ metadata:
   name: default
 spec:
   amiFamily: AL2 # Amazon Linux 2
-  role: "KarpenterNodeRole-asista-ap-south-1-Dev-eks" # replace with your cluster name
+  role: "KarpenterNodeRole-tapplent-ap-south-1-dev-eks" # replace with your cluster name
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: "asista-ap-south-1-Dev-eks" # replace with your cluster name
+        karpenter.sh/discovery: "tapplent-ap-south-1-dev-eks" # replace with your cluster name
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: "asista-ap-south-1-Dev-eks" # replace with your cluster name
+        karpenter.sh/discovery: "tapplent-ap-south-1-dev-eks" # replace with your cluster name
   amiSelectorTerms:
     - id: "ami-037d1887f24a36808"
     - id: "ami-04655aa95cb2514c7"
+    - alias: "al2023@v20250813"
 #   - id: "${GPU_AMI_ID}" # <- GPU Optimized AMD AMI 
 #   - name: "amazon-eks-node-${K8S_VERSION}-*" # <- automatically upgrade when a new AL2 EKS Optimized AMI is released. This is unsafe for production workloads. Validate AMIs in lower environments before deploying them to production.
