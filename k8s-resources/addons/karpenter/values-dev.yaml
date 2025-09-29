@@ -20,7 +20,7 @@ serviceAccount:
   name: "karpenter"
   # -- Additional annotations for the ServiceAccount.
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::539247456163:role/KarpenterControllerRole-asista-ap-south-1-Dev-eks
+    eks.amazonaws.com/role-arn: arn:aws:iam::730335384723:role/KarpenterControllerRole
 # -- Specifies additional rules for the core ClusterRole.
 additionalClusterRoleRules: []
 serviceMonitor:
