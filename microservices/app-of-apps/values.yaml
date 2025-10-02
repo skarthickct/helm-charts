@@ -24,7 +24,7 @@ apps:
 
   - name: flask-app
     repoURL: "https://github.com/skarthickct/helm-charts.git" # Add repo url which has microservice-2 helm chart
-    chartPath: microservices/applications/application-1/microservice-2/
+    chartPath: microservices/applications/application-2/microservice-2/
     valuesFile: values.yaml
     namespace: ""
     prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
