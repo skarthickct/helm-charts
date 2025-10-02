@@ -4,7 +4,7 @@ apps:
 #=======================
 
   - name: microservice-1
-    repoURL: "" # Add repo url which has microservice-2 helm chart
+    repoURL: "https://github.com/skarthickct/helm-charts.git" # Add repo url which has microservice-2 helm chart
     chartPath: microservices/applications/application-1/microservice-1/
     valuesFile: values-dev.yaml
     namespace: ""
@@ -22,8 +22,8 @@ apps:
 # application-2
 #=======================
 
-  - name: microservice-1
-    repoURL: "" # Add repo url which has microservice-2 helm chart
+  - name: flask-app
+    repoURL: "https://github.com/skarthickct/helm-charts.git" # Add repo url which has microservice-2 helm chart
     chartPath: microservices/applications/application-1/microservice-2/
     valuesFile: values-dev.yaml
     namespace: ""

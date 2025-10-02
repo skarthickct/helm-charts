@@ -1,5 +1,5 @@
 apiVersion: v2
-name: microservice-1
+name: flask-app
 description: This Helm Chart is used for microservice-1
 
 # A chart can be either an 'application' or a 'library' chart.
