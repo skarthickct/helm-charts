@@ -4,7 +4,7 @@
 # ==========================
 # General Application Metadata
 # ==========================
-name: microservice-1  # Name of the application; referenced across templates for naming resources.
+name: flask-app  # Name of the application; referenced across templates for naming resources.
 namespace:   # Kubernetes namespace where the resources will be deployed.
 
 # ==========================
@@ -31,7 +31,7 @@ securityContext: {}  # Define pod-level security settings (e.g., runAsUser, capa
 # ECR Image Configuration
 # ==========================
 image:
-  repository: karthickct/xplore-travels # Container image hosted in AWS ECR repository.
+  repository: karthickct/flask-app:latest # Container image hosted in AWS ECR repository.
   pullPolicy: Always  # Image pull policy: IfNotPresent ensures the image is pulled only if not cached locally.
   tag: "latest"
 
@@ -43,7 +43,7 @@ service:
   type: ClusterIP  # Kubernetes service type.
   ports:
     - port: 80  # Service port.
-      targetPort: 3005  # Container port to forward traffic.
+      targetPort: 5000  # Container port to forward traffic.
       protocol: TCP
       name: http  # Name of the service port.
 
@@ -63,14 +63,14 @@ resources: {}
 # ==========================
 ports:
   - name: http  # Port name for easier reference in templates.
-    containerPort: 3005  # Application container listens on port 8080.
+    containerPort: 5000  # Application container listens on port 8080.
     protocol: TCP  # Protocol used (TCP is default for HTTP traffic).
 
 # ==========================
 # Ingress Configuration
 # ==========================
 ingress:
-  enabled: true  # Enable ingress resource creation.
+  enabled: false  # Enable ingress resource creation.
   className: "alb"  # Specify ingress class (e.g., ALB for AWS Load Balancer, NGINX for default).
   annotations:
     # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:533267413931:certificate/849eb4d3-cccd-4f73-8486-88c35f4e054e
