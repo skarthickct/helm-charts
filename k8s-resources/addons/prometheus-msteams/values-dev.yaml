@@ -53,7 +53,7 @@ extraVolumeMounts: []
 #     mountPath: /etc/custom_path
 connectors:
 # in alertmanager, this will be used as http://prometheus-msteams:2000/bar
-- alert: https://cloudthat365.webhook.office.com/webhookb2/e043800c-cbfd-445d-8c61-a6d4165f35a5@815db2f7-1e3a-438f-8bdd-e55de825adee/IncomingWebhook/eb121e7bac8744a2820ee79bf9377249/5473a1e8-d683-419d-8b12-4b4b6cfb359d/V2n2v_PXGBtFjtfcIJ2cOoG4OLm-ERImHvMys-PYv-77E1
+- alert: https://cloudthat365.webhook.office.com/webhookb2/fffa01fe-b99e-4127-8b5f-b421915b5d20@815db2f7-1e3a-438f-8bdd-e55de825adee/IncomingWebhook/802e23cb2604451c91de0c6bd6d3c186/2dc1606b-3790-45bd-92c5-88abf4b30d07/V2e33WuXEj-yW7CM0f6TfqB5DC3Fb2yyHY4IaQ91VLLTM1
 # ref: https://github.com/prometheus-msteams/prometheus-msteams#customise-messages-per-ms-teams-channel
 connectorsWithCustomTemplates: 
   # - request_path: /alert
@@ -117,4 +117,5 @@ envFrom: {}
 #   - secretRef:
 #       name: my-prometheus-msteams-env-secret
 #   - configMapRef:
+
 #       name: my-prometheus-msteams-env-cm
