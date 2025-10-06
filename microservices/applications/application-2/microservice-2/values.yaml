@@ -50,7 +50,7 @@ service:
 # ==========================
 # Resource Requests and Limits
 # ==========================
-resources: {}
+resources: 
   limits:
     cpu: "200m"  # Maximum CPU allocation for the container.
     memory: "512Mi"  # Maximum memory allocation.
@@ -222,6 +222,7 @@ configMapData:
 createAppSecret: false  # Do not create the application secret.
 secret:
   data: {}  # You can populate this with key-value pairs for sensitive data.
+
 
 
 
