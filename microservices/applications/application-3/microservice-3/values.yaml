@@ -33,7 +33,7 @@ securityContext: {}  # Define pod-level security settings (e.g., runAsUser, capa
 image:
   repository: karthickct/flask-app # Container image hosted in AWS ECR repository.
   pullPolicy: Always  # Image pull policy: IfNotPresent ensures the image is pulled only if not cached locally.
-  tag: "v3"
+  tag: "v6"
 
 # ==========================
 # Service Configuration
@@ -43,7 +43,7 @@ service:
   type: LoadBalancer  # Kubernetes service type.
   ports:
     - port: 80  # Service port.
-      targetPort: 6000  #3005  # Container port to forward traffic.
+      targetPort: 5000  #3005  # Container port to forward traffic.
       protocol: TCP
       name: http  # Name of the service port.
 
@@ -63,7 +63,7 @@ resources:
 # ==========================
 ports:
   - name: http  # Port name for easier reference in templates.
-    containerPort: 6000  # Application container listens on port 8080.
+    containerPort: 5000  # Application container listens on port 8080.
     protocol: TCP  # Protocol used (TCP is default for HTTP traffic).
 
 # ==========================
@@ -230,6 +230,7 @@ env:
   - name: ALLOY_ENDPOINT
     value: "http://alloy.monitoring.svc.cluster.local:4318"
     #value: "http://alloy:4323"
+
 
 
 
