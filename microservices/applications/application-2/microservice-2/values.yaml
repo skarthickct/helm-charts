@@ -4,7 +4,7 @@
 # ==========================
 # General Application Metadata
 # ==========================
-name: flask-app  # Name of the application; referenced across templates for naming resources.
+name: microservice 2  # Name of the application; referenced across templates for naming resources.
 namespace:   # Kubernetes namespace where the resources will be deployed.
 
 # ==========================
@@ -31,7 +31,7 @@ securityContext: {}  # Define pod-level security settings (e.g., runAsUser, capa
 # ECR Image Configuration
 # ==========================
 image:
-  repository: karthickct/flask-app # Container image hosted in AWS ECR repository.
+  repository: karthickct/xplore-travels # Container image hosted in AWS ECR repository.
   pullPolicy: Always  # Image pull policy: IfNotPresent ensures the image is pulled only if not cached locally.
   tag: "latest"
 
@@ -222,4 +222,5 @@ configMapData:
 createAppSecret: false  # Do not create the application secret.
 secret:
   data: {}  # You can populate this with key-value pairs for sensitive data.
+
 
