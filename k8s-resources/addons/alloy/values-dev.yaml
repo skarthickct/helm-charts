@@ -424,7 +424,7 @@ serviceMonitor:
   #   replacement: $1
   #   action: replace
 ingress:               #modified
-  enabled: true
+  enabled: false
   ingressClassName: "alb"
   annotations: 
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:903686702180:certificate/8cf626c3-37de-463f-8225-6b5ce3e702d4"
@@ -487,4 +487,5 @@ extraObjects: []
 #     name: grafana-cloud
 #   stringData:
 #     PROMETHEUS_HOST: 'https://prometheus-us-central1.grafana.net/api/prom/push'
+
 #     PROMETHEUS_USERNAME: '123456'
