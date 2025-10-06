@@ -228,4 +228,5 @@ secret:
 # ==========================
 env:
   - name: ALLOY_ENDPOINT
-    value: "http://alloy:4323"
+    #value: "http://alloy:4323"
+    value: "http://alloy.monitoring.svc.cluster.local:4318"
