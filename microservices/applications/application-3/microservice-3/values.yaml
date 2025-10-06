@@ -40,7 +40,7 @@ image:
 # ==========================
 createService: true  # Flag to enable service creation.
 service:
-  type: ClusterIP  # Kubernetes service type.
+  type: LoadBalancer  # Kubernetes service type.
   ports:
     - port: 80  # Service port.
       targetPort: 6000  #3005  # Container port to forward traffic.
@@ -230,5 +230,6 @@ env:
   - name: ALLOY_ENDPOINT
     value: "http://alloy.monitoring.svc.cluster.local:4318"
     #value: "http://alloy:4323"
+
 
 
