@@ -4,7 +4,7 @@
 # ==========================
 # General Application Metadata
 # ==========================
-name: microservice 2  # Name of the application; referenced across templates for naming resources.
+name: microservice-2  # Name of the application; referenced across templates for naming resources.
 namespace:   # Kubernetes namespace where the resources will be deployed.
 
 # ==========================
@@ -222,5 +222,6 @@ configMapData:
 createAppSecret: false  # Do not create the application secret.
 secret:
   data: {}  # You can populate this with key-value pairs for sensitive data.
+
 
 
