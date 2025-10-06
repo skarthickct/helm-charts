@@ -22,7 +22,7 @@ apps:
 # application-2
 #=======================
 
-  - name: flask-app
+  - name: microservice-2
     repoURL: "https://github.com/skarthickct/helm-charts.git" # Add repo url which has microservice-2 helm chart
     chartPath: microservices/applications/application-2/microservice-2/
     valuesFile: values.yaml
@@ -36,3 +36,4 @@ apps:
       - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
       - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
       - RespectIgnoreDifferences=true # When syncing changes, respect fields ignored by the ignoreDifferences configuration
+
