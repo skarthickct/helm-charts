@@ -33,7 +33,7 @@ securityContext: {}  # Define pod-level security settings (e.g., runAsUser, capa
 image:
   repository: karthickct/flask-app # Container image hosted in AWS ECR repository.
   pullPolicy: Always  # Image pull policy: IfNotPresent ensures the image is pulled only if not cached locally.
-  tag: "fixed"
+  tag: "v2"
 
 # ==========================
 # Service Configuration
@@ -230,3 +230,4 @@ env:
   - name: ALLOY_ENDPOINT
     value: "http://alloy.monitoring.svc.cluster.local:4318"
     #value: "http://alloy:4323"
+
