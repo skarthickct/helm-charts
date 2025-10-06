@@ -5,12 +5,12 @@
 # General Application Metadata
 # ==========================
 name: microservice-2  # Name of the application; referenced across templates for naming resources.
-namespace:   # Kubernetes namespace where the resources will be deployed.
+namespace: xplore # Kubernetes namespace where the resources will be deployed.
 
 # ==========================
 # Replica and Scaling Configurations
 # ==========================
-replicaCount: 2  # Number of desired pods to run initially.
+replicaCount: 3  # Number of desired pods to run initially.
 revisionHistoryLimit: 10  # Number of old ReplicaSets to retain for rollback.
 minReadySeconds: 0  # Minimum time for a pod to be ready before it is considered available.
 rollbackWindow:
@@ -43,14 +43,14 @@ service:
   type: ClusterIP  # Kubernetes service type.
   ports:
     - port: 80  # Service port.
-      targetPort: 5000  # Container port to forward traffic.
+      targetPort: 5000  #3005  # Container port to forward traffic.
       protocol: TCP
       name: http  # Name of the service port.
 
 # ==========================
 # Resource Requests and Limits
 # ==========================
-resources: 
+resources:
   limits:
     cpu: "200m"  # Maximum CPU allocation for the container.
     memory: "512Mi"  # Maximum memory allocation.
@@ -222,7 +222,3 @@ configMapData:
 createAppSecret: false  # Do not create the application secret.
 secret:
   data: {}  # You can populate this with key-value pairs for sensitive data.
-
-
-
-

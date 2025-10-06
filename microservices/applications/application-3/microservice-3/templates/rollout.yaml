@@ -1,0 +1,118 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ include "service.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "service.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  # The number of old ReplicaSets to retain.
+  # Defaults to 10
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  # Minimum number of seconds for which a newly created pod should be ready
+  # without any of its container crashing, for it to be considered available.
+  # Defaults to 0 (pod will be considered available as soon as it is ready)
+  minReadySeconds: {{ .Values.minReadySeconds }}
+  # The rollback window provides a way to fast track deployments to
+  # previously deployed versions.
+  # Optional, and by default is not set.
+  rollbackWindow:
+    revisions: {{ .Values.rollbackWindow.revisions }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "service.fullname" . }}
+  strategy:
+    blueGreen:
+      # Indicates if the rollout should automatically promote the new ReplicaSet
+      # to the active service or enter a paused state. If not specified, the
+      # default value is true. +optional
+      autoPromotionEnabled: true
+      activeService: {{ include "service.fullname" . }}
+
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ include "service.fullname" . }}
+    spec:
+      {{- if .Values.volumes }}
+      volumes:
+        {{- toYaml .Values.volumes | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "service.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:  
+        - maxSkew: {{ .Values.topologySpreadConstraints.maxSkew }}
+          topologyKey: {{ .Values.topologySpreadConstraints.topologyKey }}
+          whenUnsatisfiable: {{ .Values.topologySpreadConstraints.whenUnsatisfiable }}
+          labelSelector:
+            matchLabels: 
+              app.kubernetes.io/name: {{ include "service.fullname" . }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- if .Values.cmd }}
+          command: {{ toYaml .Values.cmd | nindent 12 }}
+          {{- end }}
+          {{- if .Values.args }}
+          args: {{ toYaml .Values.args | nindent 12 }}
+          {{- end }}
+          {{- if .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- if .Values.ports }}
+            {{- range .Values.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .containerPort }}
+              protocol: {{ .protocol }}
+            {{- end }}
+            {{- else }}
+            # when no ports are defined
+            - name: default-port
+              containerPort: 8080
+              protocol: TCP
+            {{- end }}
+          {{- if or .Values.createConfigMap .Values.createAppSecret }}
+          envFrom:
+            {{- if .Values.createConfigMap }}
+            - configMapRef:
+                name: {{ include "service.fullname" . }}
+            {{- end }}
+            {{- if .Values.createAppSecret }}
+            - secretRef:
+                name: {{ include "service.fullname" . }}
+            {{- end }}
+          {{- end }}
+
+          {{- if .Values.livenessProbe }}
+          livenessProbe: {{ toYaml .Values.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
+          readinessProbe: {{ toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,231 @@
+# This file contains all default configurations and parameters passed to Helm templates.
+# Each parameter is explained with purpose, use-case, and references to corresponding templates.
+
+# ==========================
+# General Application Metadata
+# ==========================
+name: microservice-3  # Name of the application; referenced across templates for naming resources.
+namespace: flask # Kubernetes namespace where the resources will be deployed.
+
+# ==========================
+# Replica and Scaling Configurations
+# ==========================
+replicaCount: 3  # Number of desired pods to run initially.
+revisionHistoryLimit: 10  # Number of old ReplicaSets to retain for rollback.
+minReadySeconds: 0  # Minimum time for a pod to be ready before it is considered available.
+rollbackWindow:
+  revisions: 0  # Rollback window configuration; set to 0 to disable (can be increased as per rollback policy).
+environment: dev  # Specifies the deployment environment (e.g., dev, prod).
+
+# ==========================
+# Pod Annotations
+# ==========================
+podAnnotations: {}  # Custom annotations for pods (e.g., for monitoring or metadata purposes).
+
+# ==========================
+# Security Context
+# ==========================
+securityContext: {}  # Define pod-level security settings (e.g., runAsUser, capabilities).
+
+# ==========================
+# ECR Image Configuration
+# ==========================
+image:
+  repository: karthickct/flask-app # Container image hosted in AWS ECR repository.
+  pullPolicy: Always  # Image pull policy: IfNotPresent ensures the image is pulled only if not cached locally.
+  tag: "latest"
+
+# ==========================
+# Service Configuration
+# ==========================
+createService: true  # Flag to enable service creation.
+service:
+  type: ClusterIP  # Kubernetes service type.
+  ports:
+    - port: 80  # Service port.
+      targetPort: 6000  #3005  # Container port to forward traffic.
+      protocol: TCP
+      name: http  # Name of the service port.
+
+# ==========================
+# Resource Requests and Limits
+# ==========================
+resources:
+  limits:
+    cpu: "200m"  # Maximum CPU allocation for the container.
+    memory: "512Mi"  # Maximum memory allocation.
+  requests:
+    cpu: "50m"  # Guaranteed minimum CPU required.
+    memory: "128Mi"  # Guaranteed minimum memory required.
+
+# ==========================
+# Ports Configuration
+# ==========================
+ports:
+  - name: http  # Port name for easier reference in templates.
+    containerPort: 6000  # Application container listens on port 8080.
+    protocol: TCP  # Protocol used (TCP is default for HTTP traffic).
+
+# ==========================
+# Ingress Configuration
+# ==========================
+ingress:
+  enabled: false  # Enable ingress resource creation.
+  className: "alb"  # Specify ingress class (e.g., ALB for AWS Load Balancer, NGINX for default).
+  annotations:
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:533267413931:certificate/849eb4d3-cccd-4f73-8486-88c35f4e054e
+    alb.ingress.kubernetes.io/load-balancer-name: dev-alb # Name of ALB.
+    alb.ingress.kubernetes.io/group.name: dev-ingress-alb # Grouping ALBs for shared resources.
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'  # ALB listens on HTTP port 80.
+    alb.ingress.kubernetes.io/subnets: "subnet-1,subnet-2"
+    alb.ingress.kubernetes.io/scheme: internet-facing  # ALB is public-facing.
+    alb.ingress.kubernetes.io/target-type: ip  # ALB routes traffic to pod IPs directly.
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+  ingressRules:
+    - http:
+        paths:
+          - path: /  # Root path routing.
+            pathType: Prefix  # Route all traffic with prefix /.
+            backend:
+              service:
+                name: microservice-1  # Service name to route traffic.
+                port:
+                  number: 80  # Target service port.
+
+# ==========================
+# Autoscaling Configuration
+# ==========================
+autoscaling:
+  enabled: false  # Enable or disable HPA (Horizontal Pod Autoscaler).
+  minReplicas: 1  # Minimum number of pods to scale down to.
+  maxReplicas: 2  # Maximum number of pods to scale up.
+  targetCPUUtilizationPercentage: 70  # CPU threshold to trigger scaling.
+  targetMemoryUtilizationPercentage: 60  # Memory threshold for scaling.
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 600  # Time before scaling down.
+      policies:
+        - type: Percent
+          value: 20  # Reduce by 20%.
+          periodSeconds: 300  # Cooldown period for scaling down.
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 20  # Scale up by 20%.
+          periodSeconds: 15  # Fast response time for scaling up.
+        - type: Pods
+          value: 2  # Scale up by 2 pods.
+          periodSeconds: 15
+      selectPolicy: Max  # Use the maximum scaling policy.
+
+# ==========================
+# Service Account Configuration
+# ==========================
+serviceAccount:
+  create: false  # If true, creates a new service account.
+  # Annotations to add to the service account
+  annotations:
+    eks.amazonaws.com/role-arn: ""  # IAM role for AWS permissions.
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "default"  # Name of the service account.
+
+# =========================
+# Volumes and Volume Mounts Configuration
+# =========================
+# volumes:
+#   - name: secrets-store-inline  # Name for secrets volume.
+#     csi:
+#       driver: secrets-store.csi.k8s.io  # Use Secrets Store CSI driver.
+#       readOnly: true  # Mount as read-only.
+#       volumeAttributes:
+#         secretProviderClass: petclinic  # Reference the secret provider class.
+#   - name: data-volume  # Example emptyDir volume.
+#     emptyDir: {}  # Create an empty directory volume.
+
+# volumeMounts:
+#   - name: secrets-store-inline  # Mount the secrets store volume.
+#     mountPath: /mnt/secrets-store  # Path inside the container to mount secrets.
+#     readOnly: true  # Read-only access to the secrets.
+#   - name: data-volume  # Mount data volume.
+#     mountPath: /path/to/data  # Path for data storage.
+#     readOnly: false  # Allow write access to the data volume.
+
+# ==========================
+# Secrets Configuration (CSI driver setup example)
+# ==========================
+createSecret: false  # Flag to determine if secrets should be created.
+secretpath: /mnt/secrets-store  # Mount path for secrets.
+SecretProviderClass:
+  objects:
+    - objectName: "arn:aws:secretsmanager:ap-south-1:058264138708:secret:ap-south-1-Dev-petclinic-secret-kWLns5"
+      objectType: "secretsmanager"
+      objectAlias: "config.json"  # Alias for the secret object.
+      region: "AWS_REGION"
+
+# =========================
+# Command and Arguments Configuration
+# =========================
+# cmd: ["node"]  # Command to run in the container.
+# args: ["-e", "setInterval(() => console.log('Running...'), 10000)"]  # Arguments for the command.
+
+# =========================
+# Probes Configuration
+# =========================
+# readinessProbe:
+#   httpGet:
+#     path: /healthz  # Path for health check.
+#     port: http  # Port for health check.
+#   initialDelaySeconds: 5  # Delay before starting readiness check.
+#   periodSeconds: 10  # Period between readiness checks.
+
+# livenessProbe:
+#   httpGet:
+#     path: /healthz  # Path for liveness check.
+#     port: http  # Port for liveness check.
+#   failureThreshold: 1  # Number of failed checks before considering the container unhealthy.
+#   periodSeconds: 10  # Period between liveness checks.
+
+# startupProbe:
+#   httpGet:
+#     path: /healthz  # Path for startup check.
+#     port: http  # Port for startup check.
+#   failureThreshold: 6  # Number of failed checks before considering the container failed.
+#   periodSeconds: 10  # Period between startup checks.
+
+# ==========================
+# Pod Disruption Budget (PDB)
+# ==========================
+pdbSettings:
+  createPdb: false  # Flag to enable PDB resource.
+  minAvailable: 1  # Minimum number of pods available during disruptions.
+  maxUnavailable: 1  # Maximum unavailable pods during disruptions.
+
+# ==========================
+# Node Scheduling
+# ==========================
+nodeSelector: {}  # Node selection constraints.
+affinity: {}  # Define pod affinity/anti-affinity rules.
+tolerations: {}  # Tolerations for tainted nodes.
+
+# ==========================
+# ConfigMap Settings
+# ==========================
+createConfigMap: false  # Flag to enable ConfigMap creation.
+configMapData:
+  foo: "bar"  # Example placeholder data for ConfigMap.
+
+# =========================
+# Application Secret Configuration
+# =========================
+createAppSecret: false  # Do not create the application secret.
+secret:
+  data: {}  # You can populate this with key-value pairs for sensitive data.
+
+# ==========================
+# Environment Variables
+# ==========================
+env:
+  - name: ALLOY_ENDPOINT
+    value: "http://alloy:4323"

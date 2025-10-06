@@ -1,0 +1,11 @@
+{{- if .Values.createConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "service.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "service.fullname" . }}
+data:
+{{- toYaml .Values.configMapData | nindent 2 }}
+{{- end }}
