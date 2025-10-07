@@ -64,7 +64,7 @@ alloy:
         }
         otelcol.exporter.otlp "tempo" {
             client {
-                endpoint = "http://tempo-distributor.{{ .Release.Namespace }}.svc.{{ toYaml .Values.global.clusterDomain }}:4317"
+                endpoint = "http://tempo-distributor.{{ .Release.Namespace }}.svc.{{ toYaml .Values.global.clusterDomain }}"
                 tls {
                     insecure             = true
                     insecure_skip_verify = true
